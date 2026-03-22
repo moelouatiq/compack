@@ -1,0 +1,20 @@
+{
+  "name": "compack-group",
+  "version": "1.0.0",
+  "description": "COMPACK Group - Unified Ecosystem",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm:dev:*\"",
+    "dev:hub": "npm --prefix apps/index-hub run dev -- -p 3000",
+    "dev:solatera": "npm --prefix apps/solatera run dev -- -p 3001",
+    "dev:carbon": "npm --prefix apps/carbon run dev -- -p 3002",
+    "build": "npm --prefix apps/index-hub run build && npm --prefix apps/solatera run build && npm --prefix apps/carbon run build",
+    "start": "concurrently \"npm:start:*\"",
+    "start:hub": "npm --prefix apps/index-hub run start",
+    "start:solatera": "npm --prefix apps/solatera run start",
+    "start:carbon": "npm --prefix apps/carbon run start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  }
+}
