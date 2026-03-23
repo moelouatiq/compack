@@ -1,20 +1,41 @@
 {
   "name": "compack-group",
   "version": "1.0.0",
-  "description": "COMPACK Group - Unified Ecosystem",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm:dev:*\"",
-    "dev:hub": "npm --prefix apps/index-hub run dev -- -p 3000",
-    "dev:solatera": "npm --prefix apps/solatera run dev -- -p 3001",
-    "dev:carbon": "npm --prefix apps/carbon run dev -- -p 3002",
-    "build": "npm --prefix apps/index-hub run build && npm --prefix apps/solatera run build && npm --prefix apps/carbon run build",
-    "start": "concurrently \"npm:start:*\"",
-    "start:hub": "npm --prefix apps/index-hub run start",
-    "start:solatera": "npm --prefix apps/solatera run start",
-    "start:carbon": "npm --prefix apps/carbon run start"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.1.1",
+    "@prisma/adapter-better-sqlite3": "^7.5.0",
+    "@prisma/client": "^7.5.0",
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@types/nodemailer": "^7.0.11",
+    "better-sqlite3": "^12.8.0",
+    "framer-motion": "^11.18.2",
+    "jose": "^6.2.2",
+    "lucide-react": "^0.577.0",
+    "next": "15.3.1",
+    "nodemailer": "^8.0.3",
+    "prisma": "^7.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
-    "concurrently": "^8.0.0"
+    "@tailwindcss/postcss": "^4",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^17.3.1",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

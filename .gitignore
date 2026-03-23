@@ -5,3 +5,15 @@ out/
 .env*.local
 *.log
 .DS_Store
+
+# Database
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Prisma generated
+/src/generated/prisma
+
+# Claude
+.claude/
