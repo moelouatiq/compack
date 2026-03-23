@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Reservation" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "nom" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phone" TEXT,
@@ -12,8 +12,10 @@ CREATE TABLE "Reservation" (
     "persons" INTEGER NOT NULL,
     "packageType" TEXT NOT NULL,
     "packageLabel" TEXT NOT NULL,
-    "totalPrice" REAL NOT NULL,
+    "totalPrice" DOUBLE PRECISION NOT NULL,
     "message" TEXT,
     "status" TEXT NOT NULL DEFAULT 'en_attente',
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Reservation_pkey" PRIMARY KEY ("id")
 );
