@@ -1,19 +1,12 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaNeon } from '@prisma/adapter-neon'
-import { Pool, neonConfig } from '@neondatabase/serverless'
-
-// Required for local dev (WebSocket polyfill)
-if (process.env.NODE_ENV === 'development') {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const ws = require('ws')
-  neonConfig.webSocketConstructor = ws
-}
+import { PrismaPg } from '@prisma/adapter-pg'
+import { Pool } from 'pg'
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 
 function createPrismaClient() {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL })
-  const adapter = new PrismaNeon(pool)
+  const adapter = new PrismaPg(pool)
   return new PrismaClient({ adapter, log: ['error'] })
 }
 
