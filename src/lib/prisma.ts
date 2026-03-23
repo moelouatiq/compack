@@ -1,18 +1,19 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
-import path from 'path'
+import { PrismaNeon } from '@prisma/adapter-neon'
+import { Pool, neonConfig } from '@neondatabase/serverless'
+
+// Required for local dev (WebSocket polyfill)
+if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const ws = require('ws')
+  neonConfig.webSocketConstructor = ws
+}
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 
 function createPrismaClient() {
-  const rawUrl = process.env.DATABASE_URL ?? 'file:./dev.db'
-  // Convert "file:./dev.db" → absolute path
-  const filePart = rawUrl.replace(/^file:/, '')
-  const absolutePath = path.isAbsolute(filePart)
-    ? filePart
-    : path.join(process.cwd(), filePart)
-
-  const adapter = new PrismaBetterSqlite3({ url: absolutePath })
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+  const adapter = new PrismaNeon(pool)
   return new PrismaClient({ adapter, log: ['error'] })
 }
 
