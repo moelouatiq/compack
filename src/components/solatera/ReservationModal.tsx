@@ -17,19 +17,34 @@ const PACKAGES = [
   { id: 'tout-compris', label: 'Tout compris', desc: 'Forfait complet', discount: 5 },
 ]
 
+function todayStr() {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+function tomorrowStr() {
+  const d = new Date()
+  d.setDate(d.getDate() + 1)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
 export default function ReservationModal({ isOpen, onClose, preselectedDome }: Props) {
   const [domeType, setDomeType] = useState(preselectedDome || 'studio')
-  const [arrival, setArrival] = useState('')
-  const [departure, setDeparture] = useState('')
+  const [arrival, setArrival] = useState(todayStr)
+  const [departure, setDeparture] = useState(tomorrowStr)
   const [persons, setPersons] = useState(2)
   const [packageType, setPackageType] = useState('court')
-  const [nom, setNom] = useState('')
-  const [email, setEmail] = useState('')
+  const [nom, setNom] = useState('Sebastian Dubois')
+  const [email, setEmail] = useState('seb.dubois@monemail.com')
   const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  // Sync dome selection when modal opens with a preselected dome
+  useEffect(() => {
+    if (preselectedDome) setDomeType(preselectedDome)
+  }, [preselectedDome])
 
   // Close on Escape
   useEffect(() => {
@@ -170,24 +185,26 @@ export default function ReservationModal({ isOpen, onClose, preselectedDome }: P
                 {/* Dates */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-[#2d3436] mb-2">Date d'arrivée</label>
+                    <label htmlFor="arrival" className="block text-sm font-semibold text-[#2d3436] mb-2 cursor-pointer">Date d'arrivée</label>
                     <input
+                      id="arrival"
                       type="date"
                       value={arrival}
                       onChange={e => setArrival(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
-                      className="w-full border border-[#d4a574]/40 bg-white rounded-xl px-4 py-3 text-[#2d3436] focus:outline-none focus:ring-2 focus:ring-[#c4623d]"
+                      min={todayStr()}
+                      className="w-full border border-[#d4a574]/40 bg-white rounded-xl px-4 py-3 text-[#2d3436] focus:outline-none focus:ring-2 focus:ring-[#c4623d] cursor-pointer"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-[#2d3436] mb-2">Date de départ</label>
+                    <label htmlFor="departure" className="block text-sm font-semibold text-[#2d3436] mb-2 cursor-pointer">Date de départ</label>
                     <input
+                      id="departure"
                       type="date"
                       value={departure}
                       onChange={e => setDeparture(e.target.value)}
-                      min={arrival || new Date().toISOString().split('T')[0]}
-                      className="w-full border border-[#d4a574]/40 bg-white rounded-xl px-4 py-3 text-[#2d3436] focus:outline-none focus:ring-2 focus:ring-[#c4623d]"
+                      min={arrival || todayStr()}
+                      className="w-full border border-[#d4a574]/40 bg-white rounded-xl px-4 py-3 text-[#2d3436] focus:outline-none focus:ring-2 focus:ring-[#c4623d] cursor-pointer"
                       required
                     />
                   </div>
